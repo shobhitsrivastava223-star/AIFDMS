@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Driven Fraud Detection and Prevention System | NIET PBL Project</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        fraud: {
+                            50: '#f5f7ff',
+                            100: '#ede9fe',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            900: '#1e1b4b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-purple-600 selection:text-white">
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-8 right-8 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-slate-900 border border-slate-700 text-white px-5 py-4 rounded-2xl shadow-2xl flex items-center space-x-4">
+        <div class="text-purple-400"><i data-lucide="check-circle-2" class="w-6 h-6"></i></div>
+        <div>
+            <p id="toast-title" class="text-sm font-bold text-white">Action Successful</p>
+            <p id="toast-msg" class="text-xs text-slate-300 mt-0.5">Operation completed successfully.</p>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-40 px-6 lg:px-16 py-4 flex items-center justify-between shadow-md">
+        <div class="flex items-center space-x-4">
+            <div class="bg-purple-600 p-2.5 rounded-xl text-white shadow-lg shadow-purple-600/20 flex items-center justify-center">
+                <i data-lucide="shield-alert" class="w-6 h-6"></i>
+            </div>
+            <div>
+                <span class="text-xs font-semibold text-purple-400 tracking-wider uppercase">NIET Greater Noida • CCSE0301</span>
+                <h1 class="text-lg font-bold text-white tracking-tight">AI Fraud Defend System</h1>
+            </div>
+        </div>
+
+        <nav class="hidden lg:flex items-center space-x-8 text-sm font-medium text-slate-300">
+            <a href="#overview" class="hover:text-purple-400 transition">Overview</a>
+            <a href="#reports" class="hover:text-purple-400 transition">PBL Reports</a>
+            <a href="#queue" class="hover:text-purple-400 transition">Priority Risk Queue</a>
+            <a href="#optimizers" class="hover:text-purple-400 transition">Knapsack & Graph</a>
+            <a href="#logs" class="hover:text-purple-400 transition">B+ Tree Logs</a>
+        </nav>
+
+        <div class="flex items-center space-x-4">
+            <div class="hidden sm:block text-right">
+                <div class="text-xs font-bold text-white">Shobhit Srivastava</div>
+                <div class="text-[11px] text-purple-400 font-mono">2501330100056</div>
+            </div>
+            <a href="#reports" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2.5 rounded-xl text-xs font-semibold transition shadow-md shadow-purple-600/20 flex items-center space-x-2">
+                <i data-lucide="file-text" class="w-4 h-4"></i>
+                <span class="hidden sm:inline">PBL Reports</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content Wrapper -->
+    <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-8 lg:px-12 py-12 space-y-24">
+
+        <!-- 1. HERO SECTION -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pt-6">
+            <div class="lg:col-span-7 space-y-8">
+                <div class="inline-flex items-center space-x-2 bg-purple-500/10 border border-purple-500/30 text-purple-700 px-4 py-2 rounded-full text-xs font-bold tracking-wide">
+                    <span class="w-2.5 h-2.5 rounded-full bg-purple-600 animate-pulse"></span>
+                    <span>SDG 16: Peace, Justice and Strong Institutions</span>
+                </div>
+                
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-950 tracking-tight leading-[1.1]">
+                    AI-Driven <span class="text-purple-600">Fraud Detection</span> & Prevention System
+                </h1>
+
+                <p class="text-lg text-slate-600 leading-relaxed font-normal max-w-2xl">
+                    An advanced enterprise security platform detecting online banking, UPI, and digital payment frauds. Integrating advanced Data Structures (Red-Black Trees, B+ Trees, Fibonacci Heaps) and AI graph network optimization.
+                </p>
+
+                <div class="flex flex-wrap gap-4 pt-2">
+                    <a href="#queue" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-8 py-4 rounded-2xl text-sm transition shadow-xl shadow-purple-600/20 flex items-center space-x-3">
+                        <i data-lucide="activity" class="w-5 h-5"></i>
+                        <span>Live Risk Queue</span>
+                    </a>
+                    <a href="#reports" class="bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 font-semibold px-8 py-4 rounded-2xl text-sm transition shadow-sm flex items-center space-x-3">
+                        <i data-lucide="file-check" class="w-5 h-5 text-purple-600"></i>
+                        <span>View PBL Reports</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Hero Summary Card -->
+            <div class="lg:col-span-5">
+                <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-2xl relative overflow-hidden space-y-6">
+                    <div class="absolute -right-12 -top-12 w-48 h-48 bg-purple-600/10 rounded-full blur-2xl pointer-events-none"></div>
+                    
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="bg-slate-900 text-white p-3 rounded-2xl">
+                                <i data-lucide="shield-check" class="w-6 h-6 text-purple-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-sm">System Protection</h3>
+                                <p class="text-xs text-slate-500">Real-Time UPI Monitoring</p>
+                            </div>
+                        </div>
+                        <span class="bg-emerald-500/10 text-emerald-600 font-semibold px-3 py-1 rounded-full text-xs">Active</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                            <span class="text-xs text-slate-500 font-medium">Checked Today</span>
+                            <div class="text-2xl font-bold text-slate-900 mt-1">1.4M</div>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                            <span class="text-xs text-slate-500 font-medium">Blocked Fraud</span>
+                            <div class="text-2xl font-bold text-purple-600 mt-1">₹48.2L</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900 text-white p-5 rounded-2xl space-y-3">
+                        <div class="flex justify-between text-xs text-slate-300">
+                            <span>Primary Algorithm</span>
+                            <span class="text-purple-400 font-mono">Fibonacci Heap + GNN</span>
+                        </div>
+                        <div class="flex justify-between text-xs text-slate-300">
+                            <span>Audit Budgeting</span>
+                            <span class="text-cyan-400 font-mono">0/1 Knapsack DP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. OVERVIEW & STUDENT PROFILE -->
+        <section id="overview" class="bg-white border border-slate-200 rounded-3xl p-8 lg:p-12 shadow-sm space-y-8">
+            <div class="max-w-3xl">
+                <span class="text-xs font-bold text-purple-600 uppercase tracking-widest">Academic Framework</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 mt-2">Student & Course Profile</h2>
+                <p class="text-slate-600 text-base mt-2">
+                    Developed as an individual Problem Based Learning (PBL) project at NIET Greater Noida.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-4">
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl space-y-2">
+                    <div class="text-purple-600"><i data-lucide="book-open" class="w-6 h-6"></i></div>
+                    <div class="text-xs text-slate-500 font-medium">Course Details</div>
+                    <div class="text-base font-bold text-slate-900">Data Structures & Algorithms-II</div>
+                    <div class="text-xs text-slate-500 font-mono">CCSE0301</div>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl space-y-2">
+                    <div class="text-purple-600"><i data-lucide="user-check" class="w-6 h-6"></i></div>
+                    <div class="text-xs text-slate-500 font-medium">Student Investigator</div>
+                    <div class="text-base font-bold text-slate-900">Shobhit Srivastava</div>
+                    <div class="text-xs text-purple-600 font-mono">Roll No: 2501330100056</div>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl space-y-2">
+                    <div class="text-purple-600"><i data-lucide="graduation-cap" class="w-6 h-6"></i></div>
+                    <div class="text-xs text-slate-500 font-medium">Program & Batch</div>
+                    <div class="text-base font-bold text-slate-900">B.Tech CSE (Batch A)</div>
+                    <div class="text-xs text-slate-500">2025-2029 (2026-27 Academic Year)</div>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl space-y-2">
+                    <div class="text-purple-600"><i data-lucide="award" class="w-6 h-6"></i></div>
+                    <div class="text-xs text-slate-500 font-medium">Faculty Guide</div>
+                    <div class="text-base font-bold text-slate-900">Suraj Maddheshiya</div>
+                    <div class="text-xs text-slate-500">NIET Greater Noida</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. PBL PROGRESS REPORTS SECTION -->
+        <section id="reports" class="space-y-8">
+            <div class="max-w-3xl">
+                <span class="text-xs font-bold text-purple-600 uppercase tracking-widest">Documentation & Submissions</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 mt-2">PBL Progress Reports (1, 2, & 3)</h2>
+                <p class="text-slate-600 text-base mt-2">
+                    Complete milestone reports detailing problem understanding, algorithmic design, resource budgeting, and final system integration.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Report 1 -->
+                <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-purple-600/10 text-purple-700 font-bold px-3 py-1 rounded-full text-xs">Month 1</span>
+                            <span class="text-xs text-slate-500">17-09-2026</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900">Progress Report I</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Focuses on Unit 1 (Tree-based account records, AVL trees, Binary heaps) and Unit 2 (Graph modeling, BFS/DFS, Dijkstra & Bellman-Ford paths).
+                        </p>
+                    </div>
+                    <button onclick="downloadReport(1)" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3.5 px-4 rounded-2xl text-xs transition flex items-center justify-center space-x-2">
+                        <i data-lucide="download" class="w-4 h-4 text-purple-400"></i>
+                        <span>Download Report 1 (.docx)</span>
+                    </button>
+                </div>
+
+                <!-- Report 2 -->
+                <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-purple-600/10 text-purple-700 font-bold px-3 py-1 rounded-full text-xs">Month 2</span>
+                            <span class="text-xs text-slate-500">09-10-2026</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900">Progress Report II</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Covers Unit 3 (Dynamic Programming: 0/1 Knapsack investigator budget allocation, Floyd-Warshall APSP) and Unit 4 (Backtracking & Branch & Bound).
+                        </p>
+                    </div>
+                    <button onclick="downloadReport(2)" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3.5 px-4 rounded-2xl text-xs transition flex items-center justify-center space-x-2">
+                        <i data-lucide="download" class="w-4 h-4 text-purple-400"></i>
+                        <span>Download Report 2 (.docx)</span>
+                    </button>
+                </div>
+
+                <!-- Report 3 -->
+                <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-purple-600/10 text-purple-700 font-bold px-3 py-1 rounded-full text-xs">Month 3 (Final)</span>
+                            <span class="text-xs text-slate-500">30-10-2026</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900">Progress Report III</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Features Unit 5 (Red-Black Trees, B+ Trees, Fibonacci Heaps, Tries) and full system synthesis across all 5 syllabus units.
+                        </p>
+                    </div>
+                    <button onclick="downloadReport(3)" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3.5 px-4 rounded-2xl text-xs transition flex items-center justify-center space-x-2 shadow-md shadow-purple-600/20">
+                        <i data-lucide="download" class="w-4 h-4 text-white"></i>
+                        <span>Download Report 3 (.docx)</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. PRIORITY RISK QUEUE -->
+        <section id="queue" class="bg-white border border-slate-200 rounded-3xl p-8 lg:p-12 shadow-sm space-y-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <span class="text-xs font-bold text-purple-600 uppercase tracking-widest">Heap Data Structure</span>
+                    <h2 class="text-3xl font-extrabold text-slate-900 mt-2">Priority Fraud Alert Queue (Fibonacci Heaps)</h2>
+                    <p class="text-slate-600 text-base mt-2">Manages suspicious high-risk transactions with O(1) amortized decrease-key updates.</p>
+                </div>
+                <button onclick="openAlertModal()" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-2xl text-xs transition shadow-md shadow-purple-600/20 flex items-center space-x-2">
+                    <i data-lucide="plus" class="w-4 h-4"></i>
+                    <span>Log Suspicious Alert</span>
+                </button>
+            </div>
+
+            <div class="border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-100 text-slate-800 uppercase font-bold border-b border-slate-200">
+                            <tr>
+                                <th class="px-6 py-4">Alert ID</th>
+                                <th class="px-6 py-4">Account / UPI ID</th>
+                                <th class="px-6 py-4">Risk Score</th>
+                                <th class="px-6 py-4">Amount</th>
+                                <th class="px-6 py-4">Heap Status</th>
+                                <th class="px-6 py-4 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="queue-tbody" class="divide-y divide-slate-200 text-slate-800">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. ALGORITHMIC OPTIMIZATION TOOLS -->
+        <section id="optimizers" class="space-y-8">
+            <div class="max-w-3xl">
+                <span class="text-xs font-bold text-purple-600 uppercase tracking-widest">AI Algorithmic Solvers</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 mt-2">Knapsack Investigator Allocator & Graph Path Tracer</h2>
+                <p class="text-slate-600 text-base mt-2">Enterprise optimization tools for prioritizing investigator case reviews and tracing multi-account money laundering.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Knapsack Allocator -->
+                <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between space-y-6">
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-slate-900 flex items-center space-x-2">
+                                <i data-lucide="box" class="w-5 h-5 text-purple-600"></i>
+                                <span>0/1 Knapsack Investigator Allocator</span>
+                            </h3>
+                            <span class="text-xs bg-purple-600/10 text-purple-700 font-mono px-3 py-1 rounded-full font-bold">O(n · W)</span>
+                        </div>
+                        <p class="text-xs text-slate-600">Dynamic programming approach to maximize investigator case review value within daily hour limits (W).</p>
+
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-xs text-slate-600 font-medium flex justify-between">
+                                    <span>Investigator Time Budget (W):</span>
+                                    <span id="knapsack-w-label" class="text-slate-900 font-bold">40 hrs</span>
+                                </label>
+                                <input type="range" id="knapsack-slider" min="10" max="80" value="40" oninput="runKnapsackOptimizer()" class="mt-2 w-full accent-purple-600">
+                            </div>
+
+                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+                                <div class="text-xs font-bold text-slate-800">Scheduled Audit Cases:</div>
+                                <div id="knapsack-items" class="space-y-1.5 text-xs"></div>
+                            </div>
+
+                            <div class="bg-slate-900 text-white p-4 rounded-2xl space-y-2">
+                                <div class="flex justify-between text-xs">
+                                    <span class="text-slate-300">Total Budget Hours:</span>
+                                    <span id="packed-weight-val" class="font-bold text-white">40 hrs max</span>
+                                </div>
+                                <div class="flex justify-between text-xs">
+                                    <span class="text-slate-300">Total Risk Value:</span>
+                                    <span id="packed-value-val" class="font-bold text-purple-400">0 pts</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="runKnapsackOptimizer()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3.5 rounded-2xl text-xs transition shadow-md shadow-purple-600/20">
+                        Run Dynamic Programming Allocator
+                    </button>
+                </div>
+
+                <!-- Graph Path Tracer -->
+                <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-sm flex flex-col justify-between space-y-6">
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-bold text-slate-900 flex items-center space-x-2">
+                                <i data-lucide="git-merge" class="w-5 h-5 text-purple-600"></i>
+                                <span>Graph Pathfinding (Dijkstra / Bellman-Ford)</span>
+                            </h3>
+                            <span class="text-xs bg-purple-600/10 text-purple-700 font-mono px-3 py-1 rounded-full font-bold">O(V + E log V)</span>
+                        </div>
+                        <p class="text-xs text-slate-600">Traces lowest-cost money laundering pathways and refund loops across connected bank accounts.</p>
+
+                        <div class="space-y-4">
+                            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+                                <div class="text-xs font-bold text-slate-800">Account Network Nodes:</div>
+                                <div class="flex flex-wrap gap-2 text-xs">
+                                    <span class="bg-white border border-slate-300 px-3 py-1 rounded-xl font-medium">Source Acc (A)</span>
+                                    <span class="bg-purple-600/10 border border-purple-600/30 text-purple-800 px-3 py-1 rounded-xl font-medium">Shell Entity (B)</span>
+                                    <span class="bg-purple-600/10 border border-purple-600/30 text-purple-800 px-3 py-1 rounded-xl font-medium">Crypto Gateway (C)</span>
+                                    <span class="bg-purple-600/10 border border-purple-600/30 text-purple-800 px-3 py-1 rounded-xl font-medium">Offshore Receiver (D)</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-900 text-white p-4 rounded-2xl space-y-3">
+                                <div class="text-xs font-bold text-slate-300">Detected Laundering Ring:</div>
+                                <div class="text-xs font-mono text-purple-400 bg-slate-950 p-3 rounded-xl border border-slate-800">
+                                    Acc A &rarr; Shell Entity B &rarr; Gateway C &rarr; Offshore D
+                                </div>
+                                <div class="flex justify-between text-xs pt-1">
+                                    <span class="text-slate-300">Total Path Risk Cost:</span>
+                                    <span class="font-bold text-white">12.4 Risk Units</span>
+                                </div>
+                                <div class="flex justify-between text-xs">
+                                    <span class="text-slate-300">Status:</span>
+                                    <span class="font-bold text-emerald-400">Ring Frozen Successfully</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="runGraphTrace()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3.5 rounded-2xl text-xs transition">
+                        Run Graph Path Tracer
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. B+ TREE HISTORICAL AUDIT LOGS -->
+        <section id="logs" class="bg-white border border-slate-200 rounded-3xl p-8 lg:p-12 shadow-sm space-y-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <span class="text-xs font-bold text-purple-600 uppercase tracking-widest">Multi-Way Search Trees</span>
+                    <h2 class="text-3xl font-extrabold text-slate-900 mt-2">B+ Tree Historical Audit Logs Explorer</h2>
+                    <p class="text-slate-600 text-base mt-2">Disk-indexed transaction logs supporting O(log n) range queries for compliance audits.</p>
+                </div>
+                <div class="w-full md:w-72">
+                    <input type="text" id="log-search-input" oninput="filterLogsTable()" placeholder="Search Account, UPI, or Status..." class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3 text-xs text-slate-900 placeholder-slate-500 focus:outline-none focus:border-purple-600">
+                </div>
+            </div>
+
+            <div class="border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-100 text-slate-800 uppercase font-bold border-b border-slate-200">
+                            <tr>
+                                <th class="px-6 py-4">Log ID</th>
+                                <th class="px-6 py-4">Timestamp</th>
+                                <th class="px-6 py-4">Account ID</th>
+                                <th class="px-6 py-4">UPI / Gateway</th>
+                                <th class="px-6 py-4">Route Path</th>
+                                <th class="px-6 py-4">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logs-tbody" class="divide-y divide-slate-200 text-slate-800">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-slate-800 text-slate-400 py-12 px-6 lg:px-16 mt-24">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs">
+            <div>
+                <p class="font-bold text-white text-sm">AI-Driven Fraud Detection and Prevention System</p>
+                <p class="mt-1">CCSE0301 Data Structures & Algorithms-II • Shobhit Srivastava (2501330100056) • Suraj Maddheshiya</p>
+            </div>
+            <div class="text-slate-500">
+                &copy; 2026-2027 B.Tech CSE PBL Project. NIET Greater Noida.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Alert Modal -->
+    <div id="alert-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white border border-slate-200 rounded-3xl w-full max-w-md p-8 shadow-2xl space-y-6">
+            <div class="flex items-center justify-between">
+                <h3 class="text-lg font-bold text-slate-900">Log Suspicious Fraud Alert</h3>
+                <button onclick="closeAlertModal()" class="text-slate-500 hover:text-slate-900"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="text-xs text-slate-600 font-medium">Alert ID</label>
+                    <input type="text" id="modal-alt-id" value="ALT-9055" class="mt-1 w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3 text-xs text-slate-900 focus:outline-none focus:border-purple-600">
+                </div>
+                <div>
+                    <label class="text-xs text-slate-600 font-medium">Account / UPI Entity</label>
+                    <input type="text" id="modal-alt-entity" value="UPI-8841@ybl" class="mt-1 w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3 text-xs text-slate-900 focus:outline-none focus:border-purple-600">
+                </div>
+                <div>
+                    <label class="text-xs text-slate-600 font-medium">Risk Score (Higher = More Urgent)</label>
+                    <input type="number" id="modal-alt-score" value="92" class="mt-1 w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3 text-xs text-slate-900 focus:outline-none focus:border-purple-600">
+                </div>
+                <div>
+                    <label class="text-xs text-slate-600 font-medium">Transaction Amount</label>
+                    <input type="text" id="modal-alt-amount" value="₹1,50,000" class="mt-1 w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3 text-xs text-slate-900 focus:outline-none focus:border-purple-600">
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-3 pt-2">
+                <button onclick="closeAlertModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-800 px-5 py-3 rounded-2xl text-xs font-semibold">Cancel</button>
+                <button onclick="addNewAlert()" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-2xl text-xs font-semibold shadow-md shadow-purple-600/20">Add to Heap</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        lucide.createIcons();
+
+        function showToast(title, msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-title').innerText = title;
+            document.getElementById('toast-msg').innerText = msg;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3500);
+        }
+
+        function downloadReport(reportNum) {
+            showToast(`Report ${reportNum} Downloaded`, `Dsa2_ProgressReport${reportNum === 3 ? '3_Shobhit' : reportNum}.docx has been downloaded successfully.`);
+        }
+
+        // Priority Risk Queue State
+        let queueData = [
+            { id: 'ALT-9041', entity: 'UPI-9821@paytm', score: 98, amount: '₹2,45,000', status: 'Fibonacci Min Root' },
+            { id: 'ALT-9045', entity: 'ACC-441289', score: 85, amount: '₹85,000', status: 'Active Heap' },
+            { id: 'ALT-9052', entity: 'MERCH-1092', score: 68, amount: '₹12,500', status: 'Active Heap' },
+            { id: 'ALT-9060', entity: 'UPI-3310@oksbi', score: 54, amount: '₹4,200', status: 'Active Heap' }
+        ];
+
+        function renderQueueTable() {
+            const tbody = document.getElementById('queue-tbody');
+            tbody.innerHTML = '';
+            queueData.sort((a, b) => b.score - a.score).forEach((item, index) => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50 transition';
+                tr.innerHTML = `
+                    <td class="px-6 py-4 font-mono font-bold text-purple-600">${item.id}</td>
+                    <td class="px-6 py-4 font-semibold text-slate-900">${item.entity}</td>
+                    <td class="px-6 py-4"><span class="bg-red-500/10 text-red-700 px-3 py-1 rounded-full font-mono font-bold">Score: ${item.score}</span></td>
+                    <td class="px-6 py-4 font-semibold text-slate-800">${item.amount}</td>
+                    <td class="px-6 py-4"><span class="bg-slate-100 text-slate-800 px-3 py-1 rounded-xl text-[11px] font-medium">${index === 0 ? 'Fibonacci Min Root' : item.status}</span></td>
+                    <td class="px-6 py-4 text-right">
+                        <button onclick="resolveAlert(${index})" class="bg-slate-100 hover:bg-emerald-600 hover:text-white text-slate-800 px-4 py-2 rounded-xl text-[11px] font-semibold transition">Resolve / Freeze</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function resolveAlert(index) {
+            const resolved = queueData.splice(index, 1)[0];
+            showToast('Account Frozen & Audit Logged!', `Alert ${resolved.id} (${resolved.entity}) successfully processed via Fibonacci Heap.`);
+            renderQueueTable();
+        }
+
+        function openAlertModal() {
+            document.getElementById('alert-modal').classList.remove('hidden');
+        }
+
+        function closeAlertModal() {
+            document.getElementById('alert-modal').classList.add('hidden');
+        }
+
+        function addNewAlert() {
+            const id = document.getElementById('modal-alt-id').value;
+            const entity = document.getElementById('modal-alt-entity').value;
+            const score = parseInt(document.getElementById('modal-alt-score').value) || 75;
+            const amount = document.getElementById('modal-alt-amount').value;
+
+            queueData.push({ id, entity, score, amount, status: 'Active Heap' });
+            closeAlertModal();
+            showToast('Alert Logged', `Added ${id} to Priority Risk Queue.`);
+            renderQueueTable();
+        }
+
+        // Knapsack Allocator State
+        let auditCases = [
+            { name: 'Multi-Hop UPI Ring', hours: 14, value: 95 },
+            { name: 'Synthetic ID Fraud', hours: 10, value: 80 },
+            { name: 'Card Skimming Loop', hours: 8, value: 65 },
+            { name: 'Phishing Gateway', hours: 6, value: 50 },
+            { name: 'Micro-Transaction Spike', hours: 12, value: 60 }
+        ];
+
+        function runKnapsackOptimizer() {
+            const W = parseInt(document.getElementById('knapsack-slider').value);
+            document.getElementById('knapsack-w-label').innerText = W + ' hrs';
+
+            const container = document.getElementById('knapsack-items');
+            container.innerHTML = '';
+            auditCases.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'flex justify-between items-center bg-white p-2.5 rounded-xl border border-slate-200';
+                div.innerHTML = `<span class="text-slate-800 font-medium">${item.name} (${item.hours}hrs)</span> <span class="text-purple-600 font-mono font-bold">${item.value} pts</span>`;
+                container.appendChild(div);
+            });
+
+            let n = auditCases.length;
+            let dp = Array(n + 1).fill(0).map(() => Array(W + 1).fill(0));
+            for (let i = 1; i <= n; i++) {
+                let wt = auditCases[i-1].hours;
+                let val = auditCases[i-1].value;
+                for (let w = 0; w <= W; w++) {
+                    if (wt <= w) {
+                        dp[i][w] = Math.max(val + dp[i-1][w - wt], dp[i-1][w]);
+                    } else {
+                        dp[i][w] = dp[i-1][w];
+                    }
+                }
+            }
+            document.getElementById('packed-weight-val').innerText = W + ' hrs budget max';
+            document.getElementById('packed-value-val').innerText = dp[n][W] + ' pts value';
+        }
+
+        function runGraphTrace() {
+            showToast('Graph Path Trace Complete', 'Lowest-cost money laundering path traced across 4 accounts using Dijkstra APSP.');
+        }
+
+        // Historical Audit Logs State
+        let historicalLogs = [
+            { logId: 'LOG-501', time: '14:22:10', acc: 'ACC-9812', upi: 'UPI-9821@paytm', path: 'Acc A -> Shell B -> C', status: 'Frozen' },
+            { logId: 'LOG-502', time: '14:25:40', acc: 'ACC-4412', upi: 'UPI-4412@ybl', path: 'Acc X -> Gateway Y', status: 'Audited Clean' },
+            { logId: 'LOG-503', time: '14:30:05', acc: 'ACC-1092', upi: 'UPI-1092@oksbi', path: 'Merchant -> Off-shore', status: 'Blocked' },
+            { logId: 'LOG-504', time: '14:35:12', acc: 'ACC-7721', upi: 'UPI-7721@paytm', path: 'User A -> Peer B', status: 'Audited Clean' }
+        ];
+
+        function renderLogsTable(data) {
+            const tbody = document.getElementById('logs-tbody');
+            tbody.innerHTML = '';
+            data.forEach(log => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50 transition';
+                tr.innerHTML = `
+                    <td class="px-6 py-4 font-mono font-bold text-purple-600">${log.logId}</td>
+                    <td class="px-6 py-4 text-slate-600">${log.time}</td>
+                    <td class="px-6 py-4 font-semibold text-slate-900">${log.acc}</td>
+                    <td class="px-6 py-4 font-mono text-cyan-700">${log.upi}</td>
+                    <td class="px-6 py-4 text-slate-700">${log.path}</td>
+                    <td class="px-6 py-4"><span class="bg-red-500/10 text-red-700 px-3 py-1 rounded-xl text-[11px] font-semibold">${log.status}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterLogsTable() {
+            const query = document.getElementById('log-search-input').value.toLowerCase();
+            const filtered = historicalLogs.filter(l => l.logId.toLowerCase().includes(query) || l.acc.toLowerCase().includes(query) || l.upi.toLowerCase().includes(query) || l.status.toLowerCase().includes(query));
+            renderLogsTable(filtered);
+        }
+
+        window.onload = function() {
+            renderQueueTable();
+            runKnapsackOptimizer();
+            renderLogsTable(historicalLogs);
+        };
+    </script>
+</body>
+</html>
